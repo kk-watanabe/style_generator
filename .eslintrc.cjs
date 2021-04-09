@@ -8,8 +8,8 @@ module.exports = {
     { files: ['*.svelte'], processor: 'svelte3/svelte3' },
     {
       files: [
-        "test/_helpers/*.{j,t}s",
-        "test/**/*.spec.{j,t}s?(x)"
+        'test/_helpers/*.{j,t}s',
+        'test/**/*.spec.{j,t}s?(x)'
       ],
       env: {
         jest: true
@@ -21,11 +21,23 @@ module.exports = {
 	},
 	parserOptions: {
 		sourceType: 'module',
-		ecmaVersion: 2019
+		ecmaVersion: 2019,
 	},
 	env: {
 		browser: true,
 		es2017: true,
 		node: true
-  }
+  },
+  rules: {
+    'prettier/prettier': 'error',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/ban-types': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    // for svelte
+    '@typescript-eslint/consistent-type-imports': [
+      'error',
+      { prefer: 'type-imports' },
+    ],
+  },
 };
