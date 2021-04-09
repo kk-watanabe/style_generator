@@ -1,8 +1,0 @@
-{
-  "csscomb.preset": "zen",
-  "csscomb.formatOnSave": true,
-  "editor.formatOnSave": false,
-  "[svelte]": {
-    "editor.defaultFormatter": "JamesBirtles.svelte-vscode"
-  }
-}
