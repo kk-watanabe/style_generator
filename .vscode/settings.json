@@ -2,6 +2,15 @@
   "csscomb.preset": "zen",
   "csscomb.formatOnSave": true,
   "editor.formatOnSave": true,
+  "eslint.options": {
+    "configFile": ".eslintrc.js"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[svelte]": {
     "editor.defaultFormatter": "svelte.svelte-vscode"
   }
