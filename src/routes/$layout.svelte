@@ -1,17 +1,29 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import "../../node_modules/reseter.css";
+
+  import { onMount } from "svelte";
+
+  const NAVI_WIDTH_KEY = "naviWidth";
+  const NAVI_MIN_WIDTH = 200;
+  const DRAG_IMAGE =
+    "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+
+  let naviWidth = NAVI_MIN_WIDTH;
+  let isDragging = false;
 
   let dragImage: HTMLImageElement;
 
-  let naviWidth = 200;
-  let isDragging = false;
-
   onMount(() => {
     dragImage = new Image(0, 0);
-    dragImage.src =
-      "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+    dragImage.src = DRAG_IMAGE;
+
+    const savedNaviWidth = localStorage.getItem(NAVI_WIDTH_KEY);
+    naviWidth = Number(savedNaviWidth);
   });
+
+  const getNaviWidht = (x: number): number => {
+    return NAVI_MIN_WIDTH >= x ? NAVI_MIN_WIDTH : x;
+  };
 
   const onDragStart = (e: DragEvent) => {
     isDragging = true;
@@ -26,7 +38,7 @@
     const x = e.x;
 
     if (x !== 0) {
-      naviWidth = x;
+      naviWidth = getNaviWidht(x);
     }
   };
 
@@ -37,8 +49,11 @@
   };
 
   const onDragEnd = (e: DragEvent) => {
-    onDrag(e);
     isDragging = false;
+
+    const x = e.x;
+    const naviWidth = getNaviWidht(x);
+    localStorage.setItem(NAVI_WIDTH_KEY, String(naviWidth));
   };
 </script>
 
@@ -69,13 +84,14 @@
     }
 
     &__drag-area {
-      border-right: 1px solid #ddd;
       width: 10px;
       height: 100vh;
-      cursor: ew-resize;
+      border-right: 1px solid #ddd;
       background-color: #fff;
-      user-select: none;
+      cursor: ew-resize;
       transition: background-color 0.3s ease;
+
+      user-select: none;
 
       &:hover {
         background-color: #eee;
