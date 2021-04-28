@@ -2,15 +2,14 @@ import { action } from "@storybook/addon-actions";
 import { ButtonSize, ButtonColor } from "$const/button";
 import Button from "$lib/Button.svelte";
 
-interface Props {
-  label: string;
-  size: ButtonSize;
-  color: ButtonColor;
-}
+export const ActionsData = {
+  onClick: action("click"),
+};
 
 export default {
-  title: "Atom/Button",
+  title: "Example/Example",
   component: Button,
+  excludeStories: /.*Data$/,
   argTypes: {
     label: { control: { type: "text" } },
     size: {
@@ -25,18 +24,22 @@ export default {
         options: ButtonColor,
       },
     },
+    disabled: { control: { type: "boolean" } },
+    onClick: { action: "click" },
   },
 };
 
-const Template = (args: Props) => ({
+const Template = ({ onClick, ...args }) => ({
   Component: Button,
   props: args,
+  on: { ...ActionsData },
 });
 
 export const Default = Template.bind({});
 
 Default.args = {
   label: "button label",
-  size: ButtonSize.Medium,
+  size: ButtonSize.Large,
   color: ButtonColor.Light,
+  disabled: false,
 };
