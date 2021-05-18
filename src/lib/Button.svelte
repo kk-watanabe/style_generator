@@ -22,11 +22,11 @@
 
   const dispatch = createEventDispatcher();
 
-  function onClick(e: MouseEvent) {
+  const onClick = (e: MouseEvent) => {
     if (!disabled) {
       dispatch("click", e);
     }
-  }
+  };
 </script>
 
 <button class={classes().join(" ")} on:click={onClick}>
@@ -36,21 +36,22 @@
 <style lang="scss">
   @import "../styles/_functions.scss";
   @import "../styles/_color.scss";
+  @import "../styles/_size.scss";
 
   .button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    outline: none;
     border-width: 1px;
     border-style: solid;
-    border-radius: 6px;
-    color: $isColorBase1000;
     cursor: pointer;
 
     // color
     &--light {
       border-color: $isColorBase700;
       background-color: $isColorWhite;
+      color: $isColorBase1000;
       transition: background-color 0.3s ease;
 
       &:hover {
@@ -91,22 +92,25 @@
 
     // size
     &--large-size {
-      padding: 2px 20px 0;
-      height: 44px;
+      padding: 0 20px;
+      height: $componentLargeHeight;
+      border-radius: $borderRadiusLarge;
 
       @include font-size(16);
     }
 
     &--medium-size {
-      padding: 1px 16px 0;
-      height: 36px;
+      padding: 0 16px;
+      height: $componentMediumHeight;
+      border-radius: $borderRadiusMedium;
 
       @include font-size(14);
     }
 
     &--small-size {
-      padding: 1px 12px 0;
-      height: 26px;
+      padding: 0 12px;
+      height: $componentSmallHeight;
+      border-radius: $borderRadiusSmall;
 
       @include font-size(12);
     }
