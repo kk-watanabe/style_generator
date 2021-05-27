@@ -27,6 +27,12 @@
       "$service-worker": [".svelte/build/runtime/service-worker"],
       "$lib/*": ["src/lib/*"],
       "$const/*": ["src/const/*"],
+      "$util/*": [
+        "src/util/*"
+      ],
+      "$models/*": [
+        "src/models/*"
+      ],
     }
   },
   "include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]
