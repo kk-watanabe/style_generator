@@ -26,6 +26,7 @@ module.exports = {
       "$lib": path.resolve(__dirname, "../src/lib"),
       "$util": path.resolve(__dirname, "../src/util"),
       "$models": path.resolve(__dirname, "../src/models"),
+      "$styles": path.resolve(__dirname, "../src/styles"),
     };
 
     config.module.rules.push({

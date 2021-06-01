@@ -26,6 +26,7 @@ module.exports = {
           $const: path.resolve("./src/const"),
           $util: path.resolve("./src/util"),
           $models: path.resolve("./src/models"),
+          $styles: path.resolve("./src/styles"),
         }
       }
     },
