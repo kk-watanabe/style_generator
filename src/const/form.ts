@@ -11,3 +11,9 @@ export interface SelectOption {
   value: string | number;
   disabled: boolean;
 }
+
+export interface SliderOption {
+  min: number;
+  max: number;
+  step: number;
+}
