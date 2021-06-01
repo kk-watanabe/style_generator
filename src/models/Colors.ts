@@ -14,17 +14,41 @@ export class Colors {
   constructor(
     public readonly hex: string,
     public readonly hue: number,
+    public readonly alpha: number,
     public readonly rgba: RGBA,
     public readonly hsva: HSVA,
     public readonly hsla: HSLA
   ) {}
+
+  get rgbaStyle(): string {
+    const { r, g, b, a } = this.rgba;
+
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
+  }
+
+  public static updateHue(hsva: HSVA, hue: number): Colors {
+    const updatteHsva = { h: hue, s: hsva.s, v: hsva.v, a: hsva.a };
+    const rgba = convertHSVAtoRGBA(updatteHsva);
+    const hex = convertRGBAtoHex(rgba);
+    const hsla = convertHSVAtoHSLA(hsva);
+
+    return new Colors(hex, hsla.h, rgba.a, rgba, hsva, hsla);
+  }
+
+  public static updateAlpha(hex: string, alpha: number): Colors {
+    const rgba = convertHexToRgba(hex, alpha);
+    const hsva = convertRGBAtoHSVA(rgba);
+    const hsla = convertHSVAtoHSLA(hsva);
+
+    return new Colors(hex, hsla.h, rgba.a, rgba, hsva, hsla);
+  }
 
   public static convertHexToColors(hex: string): Colors {
     const rgba = convertHexToRgba(hex);
     const hsva = convertRGBAtoHSVA(rgba);
     const hsla = convertHSVAtoHSLA(hsva);
 
-    return new Colors(hex, hsla.h, rgba, hsva, hsla);
+    return new Colors(hex, hsla.h, rgba.a, rgba, hsva, hsla);
   }
 
   public static convertHSVAToColors(hsva: HSVA): Colors {
@@ -32,6 +56,6 @@ export class Colors {
     const hex = convertRGBAtoHex(rgba);
     const hsla = convertHSVAtoHSLA(hsva);
 
-    return new Colors(hex, hsla.h, rgba, hsva, hsla);
+    return new Colors(hex, hsla.h, rgba.a, rgba, hsva, hsla);
   }
 }
