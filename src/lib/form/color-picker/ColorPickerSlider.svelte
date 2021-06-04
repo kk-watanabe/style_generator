@@ -48,7 +48,7 @@
   };
 
   $: hueDotStyle = () => {
-    const left = (hueValue / hueOption.max) * maxPercent;
+    const left = (colors.hue / hueOption.max) * maxPercent;
 
     return `left: ${left}%; background-color: ${colors.rgbaStyle};`;
   };
@@ -66,7 +66,7 @@
   };
 
   $: alphaDotStyle = () => {
-    const left = (alphaValue / alphaOption.max) * maxPercent;
+    const left = ((colors.alpha * 10) / alphaOption.max) * maxPercent;
 
     return `left: ${left}%`;
   };
@@ -127,11 +127,11 @@
   };
 
   const updateAlpha = (e: MouseEvent) => {
-    alphaValue = getValue(e.x, alphaRange, alphaOption);
+    const value = getValue(e.x, alphaRange, alphaOption);
 
-    const value = (alphaValue * 0.1).toFixed(1);
+    alphaValue = Number((value * 0.1).toFixed(1));
 
-    colors = Colors.updateAlpha(colors.hex, Number(value));
+    colors = Colors.updateAlpha(colors.hex, alphaValue);
   };
 
   const onAlphaClick = (e: MouseEvent) => {
@@ -164,8 +164,6 @@
     window.addEventListener("mouseup", onAlphaMouseUp);
   };
 </script>
-
-{alphaValue}
 
 <div class={`${defaultClass}`}>
   <div

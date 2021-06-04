@@ -29,7 +29,7 @@
   };
 </script>
 
-<button class={classes().join(" ")} on:click={onClick}>
+<button type="button" class={classes().join(" ")} on:click={onClick}>
   {label}
 </button>
 

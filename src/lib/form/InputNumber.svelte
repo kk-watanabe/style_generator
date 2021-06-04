@@ -69,6 +69,7 @@
     display: inline-flex;
     align-items: center;
     min-width: $fromDefaultWidth;
+    width: 100%;
     border: 1px solid $isColorBase600;
     background-color: $isColorWhite;
 

@@ -29,40 +29,46 @@
     return `width: ${cursorSize}px; height: ${cursorSize}px; transform: translate(${x}px, ${y}px)`;
   };
 
-  onMount(() => {
+  $: updateCanvas(colors.hue);
+
+  const updateCanvas = (hue: number) => {
+    if (!canvas) return;
+
     context = canvas.getContext("2d");
 
-    const baseGradient = context.createLinearGradient(0, 0, canvasWidth, 0);
-    baseGradient.addColorStop(0, "hsla(0, 0%, 100%, 1)"); // white
-    baseGradient.addColorStop(1, `hsla(${colors.hsla.h}, 100%, 50%, 1)`);
-    context.fillStyle = baseGradient;
-    context.fillRect(0, 0, canvasWidth, canvasHeight);
+    if (context) {
+      const baseGradient = context.createLinearGradient(0, 0, canvasWidth, 0);
+      baseGradient.addColorStop(0, "hsla(0, 0%, 100%, 1)"); // white
+      baseGradient.addColorStop(1, `hsla(${hue}, 100%, 50%, 1)`);
+      context.fillStyle = baseGradient;
+      context.fillRect(0, 0, canvasWidth, canvasHeight);
 
-    const coverGradient = context.createLinearGradient(0, 0, 0, canvasHeight);
-    coverGradient.addColorStop(0, "hsla(0, 0%, 100%, 0)"); // transparent
-    coverGradient.addColorStop(1, "hsla(0, 0%, 0%, 1)"); // black
-    context.fillStyle = coverGradient;
-    context.fillRect(0, 0, canvasWidth, canvasHeight);
-  });
+      const coverGradient = context.createLinearGradient(0, 0, 0, canvasHeight);
+      coverGradient.addColorStop(0, "hsla(0, 0%, 100%, 0)"); // transparent
+      coverGradient.addColorStop(1, "hsla(0, 0%, 0%, 1)"); // black
+      context.fillStyle = coverGradient;
+      context.fillRect(0, 0, canvasWidth, canvasHeight);
+    }
+  };
 
-  const updateColors = (e: MouseEvent) => {
+  const updateMouseEventColors = (e: MouseEvent) => {
     const { width, height } = canvas.getBoundingClientRect();
 
     colors = Colors.convertHSVAToColors({
       h: colors.hue,
       s: clamp(e.offsetX, 0, width) / width,
       v: 1 - clamp(e.offsetY, 0, height) / height,
-      a: 1,
+      a: colors.alpha,
     });
   };
 
   const onClick = (e: MouseEvent) => {
-    updateColors(e);
+    updateMouseEventColors(e);
   };
 
   const onMouseMove = (e: MouseEvent) => {
     if (isMouseDown) {
-      updateColors(e);
+      updateMouseEventColors(e);
     }
   };
 
@@ -79,6 +85,8 @@
 
     window.addEventListener("mouseup", onMouseUp);
   };
+
+  onMount(() => updateCanvas(colors.hue));
 </script>
 
 <div class={defaultClass}>

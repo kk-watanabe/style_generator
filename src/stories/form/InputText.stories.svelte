@@ -17,11 +17,12 @@
       },
     },
     disabled: { control: "boolean" },
+    onInput: { action: "onInput" },
   }}
 />
 
 <Template let:args>
-  <InputText {...args} bind:value />
+  <InputText {...args} bind:value on:input={args.onInput} />
 
   <div>{value}</div>
 </Template>

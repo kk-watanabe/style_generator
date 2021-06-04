@@ -26,6 +26,7 @@
 
   .input-text {
     min-width: $fromDefaultWidth;
+    width: 100%;
     outline: none;
     border: 1px solid $isColorBase600;
     background-color: $isColorWhite;

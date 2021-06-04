@@ -26,19 +26,31 @@ export class Colors {
     return `rgba(${r}, ${g}, ${b}, ${a})`;
   }
 
+  get isAlpha(): boolean {
+    return this.alpha !== 1;
+  }
+
   public static updateHue(hsva: HSVA, hue: number): Colors {
-    const updatteHsva = { h: hue, s: hsva.s, v: hsva.v, a: hsva.a };
-    const rgba = convertHSVAtoRGBA(updatteHsva);
+    const updateHsva = { h: hue, s: hsva.s, v: hsva.v, a: hsva.a };
+    const rgba = convertHSVAtoRGBA(updateHsva);
     const hex = convertRGBAtoHex(rgba);
     const hsla = convertHSVAtoHSLA(hsva);
 
-    return new Colors(hex, hsla.h, rgba.a, rgba, hsva, hsla);
+    return new Colors(hex, hue, rgba.a, rgba, updateHsva, hsla);
   }
 
   public static updateAlpha(hex: string, alpha: number): Colors {
     const rgba = convertHexToRgba(hex, alpha);
     const hsva = convertRGBAtoHSVA(rgba);
     const hsla = convertHSVAtoHSLA(hsva);
+
+    return new Colors(hex, hsla.h, rgba.a, rgba, hsva, hsla);
+  }
+
+  public static convertRgbaToColors(rgba: RGBA): Colors {
+    const hsva = convertRGBAtoHSVA(rgba);
+    const hsla = convertHSVAtoHSLA(hsva);
+    const hex = convertRGBAtoHex(rgba);
 
     return new Colors(hex, hsla.h, rgba.a, rgba, hsva, hsla);
   }

@@ -29,6 +29,16 @@ export function convertHexToRgba(hex: Hex, alpha: number = 1): RGBA {
     });
   }
 
+  if (result === null) {
+    return {
+      r: 255,
+      g: 255,
+      b: 255,
+      a: alpha,
+    } as RGBA;
+  }
+
+  console.log(result);
   return {
     r: result[0],
     g: result[1],
